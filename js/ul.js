@@ -1,0 +1,1 @@
+var serverurl="http://119.6.203.96:8080/workDir/bin/events.php";

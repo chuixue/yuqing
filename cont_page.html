@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cins</title>
+
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/datepicker3.css" rel="stylesheet">
+  <link href="css/stylebate.css" rel="stylesheet">
+  <link href="css/dynamic.css" rel="stylesheet">
+
+  <!--[if lt IE 9]>
+  <script src="js/html5.min.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+<style>
+  #jianjie
+  {
+    background: url("img/mms.png")-9px -9px;
+    width:20px;
+    height:20px;
+    display: inline-block;
+    float: right;
+  }
+  </style>
+</head>
+<body id="con">
+<div class="container">
+  <div class="row">
+    <div class="navbar navbar-fixed-top" role="navigation" id="menu-nav">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">切换导航</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Demo</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href=index.html>首页</a></li>
+          <li><a href="#">分类</a></li>
+          <li><a href="#" data-toggle="modal" data-target="#about-modal">关于</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="bodyprocess" style="display: block">
+  <img src="img/loading.gif">
+</div>
+<div id="sidebar-collapse" class="col-sm-4 col-lg-3 sidebar" style="height: 696px">
+  <div class="aside">
+    <h6>
+      <img src="" onerror="javascript:this.src='img/bg2.jpg'">
+      <span class="htitle">标题</span>
+      <span></span>
+    </h6>
+
+    <div class="jianjie" style="left: 282px; top: 40px; display: none;">
+      <span>简介</span>
+
+      <p>内容</p></div>
+    <div class="type"><span class="span1">分类</span>
+    <div id="jianjie"></div>
+    </div>
+    <ul class="biaoqian">
+      <li class="l1">事件标签:<span></span></li>
+      <li class="l2">事件趋势:<span></span></li>
+      <li class="l3">
+        <p>参与事件传播的重要媒体有;</p>
+
+        <p class="meiti">媒体:</p>
+      </li>
+    </ul>
+    <div class="index">事件影响力指数&nbsp&nbsp&nbsp<span>88</span></div>
+    <div class="compare">
+      <p class="title">同类事件对比</p>
+      <ul id="ul1" style="padding-left: 10px;">
+      </ul>
+    </div>
+  </div>
+</div>
+<!--/.sidebar-->
+<div class="col-sm-8 col-lg-9 main" id="right">
+  <div class="main_right">
+    <ul class="head">
+      <li class="active" onclick="exchange(1)">事件脉络</li>
+      <li class onclick="exchange(4)" id="menword">全局高频词</li>
+      <li class onclick="exchange(2)" id="menspread">传播动态图</li>
+      <li class onclick="exchange(3) " id="menpeople">舆论信息</li>
+    </ul>
+    <div class="right_1">
+      <h5><span>事件脉络</span>（点击传播脉络的时间节点查看关键传播信息)</h5>
+      <p class="p1"></p>
+      <div id="selectDate">
+        <span id="selectDate3">全部</span>
+        <span id="selectDate1"></span>
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+          更多
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="left:143px" id="morestep">
+
+        </ul>
+      </div>
+      <div id="daily">
+        <div id="daily_1">
+          <div class="process" style="display: none">
+            <img src="img/loading.gif">
+          </div>
+          <p class="dailytile"></p>
+          <ul id="stepul" style=" padding-left: 15px; padding-right: 10px;">
+          </ul>
+          <span id="nonedata">【暂无数据】</span>
+        </div>
+        <div id="daily_2"></div>
+      </div>
+      <div id="view" style="height:380px;margin-top:10px;">
+      </div>
+    </div>
+    <div class="right_4"> 
+      <div id="highword" style="width:100%;height:350px"></div>
+    </div>
+    <div class="right_2" id="spread">
+    </div>
+    <div class="right_3" >
+      <div id="people" style="width:100%;height:50%"></div>
+      <div id="people2" style="height:50%"></div>
+    </div>
+  </div>
+</div>
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/ejs.js"></script>
+<script src="js/public.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/ul.js"></script>
+<script src="js/esl.js"></script>
+<script src="js/config.js"></script>
+<script src="js/view.js"></script>
+<script src="js/d3.v2.min.js"></script>
+<script src="js/dynamic.js"></script>
+<script src="js/comment.js"></script>
+<script src="js/d3.layout.cloud.js"></script>
+
+
+<script id="right_time" type="text/template">
+  <% for(var i=0;i< time.length;i++){ %>
+  <div class="date <%= steptime[i]%>" style="width:<%=100/time.length-1%>%" onclick="changestep(<%= steptime[i] %>)">
+    <span><%= time[i]%></span>
+  </div>
+  <% } %>
+</script>
+<script id="left_event" type="text/template">
+  <% for(var i=0;i< event.length;i++){ %>
+  <a id="event_<%= event[i].Id %>" onclick="clickEvent(this.id)">
+    <li>
+      <p title=" <%= event[i].Tile %>">
+      <img src="img/<%=event[i].Image %>" onerror="javascript:this.src='img/bg2.jpg'">
+        <%= event[i].Tile %>
+      </p>
+      <div class="bar" style="width:<%= event[i].Value%>%">
+        <span class="value"><%= event[i].Value %></span>
+      </div>
+    </li>
+  </a>
+  <% } %>
+</script>
+<script id="right_thing" type="text/template">
+  <%if(thing.length>0) {%>
+  <% for(var i=0;i< thing.length;i=i+2){ %>
+  <li >
+    <p class="jishu" title="<%= thing[i]%>"><%= thing[i]%></p>
+  </li>
+  <%if((i+1)< thing.length) {%>
+  <li >
+    <p class="oushu" title="<%= thing[i]%>"><%= thing[i+1]%></p>
+  </li>
+  <% } %>
+  <% }%>
+  <%$("#daily_1").css("background","url(img/wall.png)center center no-repeat");%>
+  <%$("#nonedata").css("display","none"); %>
+
+  <% }%>
+  <%if(thing.length==0){%>
+  <%$("#nonedata").css("display","block");%>
+  <%$("#daily_1").css("background-image","none");%>
+  <% }%>
+</script>
+<script id="right_select" type="text/template" >
+  <% for(var i=0;i< time.length;i++){ %>
+  <span class="<%= steptime[i]%>" onclick="changestep(<%= steptime[i] %>)">
+        <%= time[i]%>
+    </span>
+  <% } %>
+</script>
+<script id="right_selectmore" type="text/template" >
+  <% for(var i=0;i< timemore.length;i++){ %>
+  <li role="presentation" onclick="changestep(<%= steptimemore[i] %>)"><a role="menuitem" tabindex="-1"> <%= timemore[i]%></a></li>
+  <% } %>
+</script>
+<script type="text/javascript">
+  $("  .main_right .head li").click(function(){
+    $(this).addClass("active");
+    $(this).siblings().removeClass("active");
+  });
+  function exchange(num)
+  {
+    $(".right_"+num).css("visibility","visible");
+    $(".right_"+num).siblings("div").css("visibility","hidden");
+  }
+  $("#menspread").click(function(){
+    LoadImage(eventinformation,"spread");
+  })
+  $("#menpeople").click(function(){
+ 	loadComment("people",eventId,"people2");
+  });
+  $("#menword").click(function(){
+	loadWords("highword",eventId);
+  });
+</script>
+<script type="text/javascript">
+  var clsarr = [];
+  clsarr[0]="";
+  clsarr[1]="社会";
+  clsarr[2]="互联网";
+  clsarr[3]="政务";
+  clsarr[4]="财经";
+  clsarr[5]="企业";
+  clsarr[6]="娱乐";
+  clsarr[7]="灾难";
+  clsarr[8]="违法犯罪";
+  clsarr[9]="国际";
+  clsarr[10]="体育";
+  clsarr[11]="人物";
+  var eventinformation;
+  $("#jianjie").hover(function(){
+    $(".jianjie").css("display","block");
+  },function(){
+    $(".jianjie").css("display","none");
+  })
+  $(function(){
+    $(".bodyprocess").css("display","block");
+    $("#sidebar-collapse").css("display","none");
+    $("#right").css("display","none");
+  });
+  function clickEvent(id){ window.location.href="cont_page.html?id=" + id.substr(6) ;}
+  var eventId=GetQueryString("id");
+  Array.prototype.delRepeat = function () {
+    var newArray = [];
+    var provisionalTable = {};
+    for (var i = 0, item; (item = this[i]) != null; i++) {
+      if (!provisionalTable[item]) {
+        newArray.push(item);
+        provisionalTable[item] = true;
+      }
+    }
+    return newArray;
+  };
+  function changestep(date)
+  {
+    $("."+date).siblings().css("opacity","1")
+    $("."+date).css("opacity","0.5");
+    var da=date.toString();
+    var time=da.substring(4,6)+"月"+da.substring(6,8)+"日";
+    $("#daily_1 p").text(time);
+    var t = {ID:eventId,date:date};
+    $.ajax({
+      url:serverurl,
+      dataType: "jsonp",
+      data: {key: "eventText", data: JSON.stringify(t)},
+      type: 'get',
+      jsonpCallback: 'call1back',
+      beforeSend:function()
+      {
+        $("#daily_1 .process").css("display","block");
+      },
+      success:function(datestep)
+      {
+        if(datestep.error==0)
+        {
+          console.log(datestep);
+          var datest=datestep.data;
+          var ejs_rightstep = $("#right_thing").html();
+          var hm = ejs.render(ejs_rightstep, {thing: datest});
+          stepul.innerHTML = hm;
+          $("#daily_1 .process").css("display","none");
+        }
+      }
+    })
+    if($("#stepu1").parent().find("li").length==0)
+    {
+      $("#nonedata").css("display","block");
+      $("#daily_1").css("background"," none")
+    }
+    else
+    {
+      $("#nonedata").css("display","none");
+      $("#daily_1").css("background-image","url(img/wall.png)");
+    }
+  }
+  onload = function () {
+    var dt = {ID: eventId};
+    $.ajax({
+      url:serverurl,
+      dataType: "jsonp",
+      data: {key: "eventInfo",data:JSON.stringify(dt)},
+      type: 'get',
+      jsonpCallback: 'callback',
+      success: function (eventinfor) {
+        if (eventinfor.error == 0) {
+          console.log(eventinfor.data);
+          eventinformation=eventinfor.data;
+          $(".bodyprocess").css("display","none");
+          $("#sidebar-collapse").css("display","block");
+          $("#right").css("display","block");
+          var inf = eventinfor.data;
+          var like = inf.like;
+          var spread = inf.spread;
+          var development = inf.development;
+          var step = development.step;
+          var days;
+          var ejsData = [];
+          var ejsdates = [];
+          var ejs_left = $("#left_event").html();
+          var ejs_righttime = $("#right_time").html();
+          var ejs_rightstep = $("#right_thing").html();
+          var ejs_select = $("#right_select").html();
+          var ejs_selectmore=$("#right_selectmore").html();
+          $(" .aside h6 img").attr("src", "/img/" + inf.img);
+          $(" .aside h6 .htitle").text(inf.title);
+          $(" .aside .jianjie p").text(inf.content);
+          $(" .aside .type .span1").text(clsarr[inf.cls]);
+          $(" .aside .biaoqian .l1 span").text(inf.labels.reduce(function(a,b){ return a+" "+b;}));
+          $(" .aside .biaoqian .l2 span").text(inf.status);
+          $(" .aside .biaoqian .l3 p:nth-child(2) ").text(inf.medias);
+          $(" .aside .index span").text(inf.value);
+         // $("  .main_right #daily #daily_1 .dailytile").text(development.date);
+          for (var i = 0; i < like.length; i++) {
+            var line = {
+              Id: like[i].id, Image: like[i].image, Tile: like[i].title,
+              Value: like[i].value
+            };
+            ejsData.push(line);
+          }
+          for (var j = 0; j < spread.length; j++)
+          {
+            days = spread[j].days;
+            for (var x = 0; x < days.length; x++) {
+              var daysline = days[x].date;
+              ejsdates.push(daysline);
+            }
+            }
+          var arr = ejsdates.delRepeat();
+          var dates = arr.sort();
+          var i;
+          i=  dates[0].substring(4, 6) + "月" + dates[0].substring(6, 8) + "日";
+          $("#daily_1 p").text(i);
+          var newdates = [],newdatesmore=[],newdatesmore1=[];
+          var datearr=[];
+          var datesselect=[],datesselect1=[];
+          for (var i = 0; i < dates.length; i++) {
+            var cc = dates[i].toString();
+            datearr.push(cc);
+            var ccb = cc.substring(4, 6) + "月" + cc.substring(6, 8) + "日";
+            newdates.push(ccb);
+          }
+          var b=dates.length>3? 3:dates.length;
+          for(var i=0;i<b;i++)
+          {
+            datesselect.push(dates[i]);
+            newdatesmore.push(newdates[i]);
+          }
+          if(b=3)
+          {
+            for(var i=b;i<dates.length;i++)
+            {
+              datesselect1.push(dates[i]);
+              newdatesmore1.push(newdates[i]);
+            }
+          }
+          var len=datearr.length-1;
+          var datearray=datearr[0].substring(0, 3)+"年"+datearr[0].substring(4, 6)+"月"+datearr[0].substring(6, 8)+"日09:00 至"+
+                  datearr[len].substring(0, 3)+"年"+datearr[len].substring(4, 6)+"月"+datearr[len].substring(6, 8)+"日16:00 (全平台)";
+          var htm = ejs.render(ejs_righttime, {time: newdates,steptime:dates});
+          var html = ejs.render(ejs_left, {event: ejsData});
+         var hm = ejs.render(ejs_rightstep, {thing: step});
+          var h = ejs.render(ejs_select, {time: newdatesmore,steptime:datesselect});
+          var i = ejs.render(ejs_selectmore, {timemore: newdatesmore1,steptimemore:datesselect1});
+          stepul.innerHTML = hm;
+          ul1.innerHTML = html;
+          daily_2.innerHTML = htm;
+          selectDate1.innerHTML = h;
+          morestep.innerHTML=i;
+          $(".main_right .p1").text(datearray);
+          loadView(eventinfor,"view");
+        }
+      },
+      error: function (xhr, status, error) {
+        alert("连接服务器失败!");
+      }
+    });
+  }
+
+
+  function GetQueryString(name)
+  {
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  unescape(r[2]); return null;
+  }
+</script>
+</body>
+</html>

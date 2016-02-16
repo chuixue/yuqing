@@ -1,0 +1,46 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+#chart {
+  margin-left: -40px;
+  height: 506px;
+}
+
+text {
+  font: 14px sans-serif;
+}
+
+.dot {
+  stroke: #000;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+.axis text{
+  color:#fff;
+  stroke:#fff;
+}
+
+.label {
+  font-size:16px;
+  fill: #fff;
+}
+
+.year.label {
+  font: 100 96px "Helvetica Neue";
+  fill: #ddd;
+}
+
+.year.label.active {
+  fill: #aaa;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+  cursor: ew-resize;
+}
