@@ -38,7 +38,7 @@
         </ul>
         <div class="col-lg-6" id="search">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search for...">
+            <input type="text" class="form-control" placeholder="Search for..." id="input1">
       <span class="input-group-btn">
         <button class="btn btn-default" id="searched" type="button">Go!</button>
       </span>
@@ -125,6 +125,12 @@
   var Event="event";
   page[0]=0;
   function clickEvent(id){ window.location.href="cont_page.html?id=" + id.substr(6) ;}
+  $("#input1").keydown(function(){
+    if(event.keyCode==13)
+    {
+      $("#searched").click();
+    }
+          });
   $("#loadmore").click(function(){
     var t = {page:page[pageid],class:typeclass};
     var ejs_right = $("#right_event").html();

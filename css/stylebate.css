@@ -418,7 +418,10 @@ h3, h4 {
     font-size: 20px;
     font-family: font_English;
 }
-
+#right
+{
+    width:68%;
+}
 .main .main_right {
     width: 100%;
     min-width:870px ;
